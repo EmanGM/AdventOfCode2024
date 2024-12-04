@@ -10,20 +10,24 @@ fun main(args: Array<String>) {
 
 fun readFileLineByLine(fileName: String, part: String): Long {
 
-    val regex = """mul\(\d+,\d+""".toRegex()
+    val regex = """mul\(\d+,\d+\)""".toRegex()
     var total: Long = 0;
     val fileText: String = File(fileName).readText(Charsets.UTF_8) 
     var matchResult = regex.find(fileText)
 
     var match = null
-    var m = matchResult
     do {
-       var match = m!!.value.split(",")
-       println("match: $match")
-       total += match[0].substring(4).toInt() * match[1].toInt()
-       m = matchResult?.next()
+       var match = matchResult!!.value.split(",")
+       val left = match[1]
+       total += match[0].substring(4).toInt() * left.substring(0, left.length - 1).toInt()
+       matchResult = matchResult?.next()
     }
-    while(m != null)
+    while(matchResult != null)
+
+    if(part == "B") {
+        val doRegex = """do\(\)""".toRegex()
+        val dontRegex = """don't\(\)""".toRegex()
+    }
             
     return total
 }
