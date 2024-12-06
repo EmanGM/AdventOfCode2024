@@ -16,22 +16,28 @@ fun readFileLineByLine(fileName: String, part: String): Long {
 
 
     val inputStream: InputStream = File(fileName).inputStream()
-    inputStream.bufferedReader().forEachLine { 
-        // if(!it.contains("|")) {
-        //     return
-        // }
+    inputStream.bufferedReader().forEachLine loop@ { 
+        if(!it.contains("|")) {
+            return@loop
+        }
         val numbers = it.split("|")
         val left = numbers[0].toInt()
         val right = numbers[1].toInt()
         if(pages.containsKey(left)) {
-
+            pages.get(left)!!.plus(right)
+            //println(pages.get(left) is Array)
         } else {
             pages.put(left, arrayOf(right))
         } 
     }
 
-    pages.forEach {
-        println("$it.key, $it.value")
+    for ((k, v) in pages) {
+        println("$k = ")
+        for(a in v) {
+            print(a)
+        }
+        print("  ")
+        //v.forEach { print(v) }
     }
 
     // for(n in numbers) {
